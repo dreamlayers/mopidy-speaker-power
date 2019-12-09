@@ -18,12 +18,15 @@ logger = logging.getLogger(__name__)
 
 class EventReporter(pykka.ThreadingActor, CoreListener):
 
-    def __init__(self, config):
+    def __init__(self, config, status_reporter):
         super(EventReporter, self).__init__()
+        self.status_reporter = status_reporter
         self.config = config['webhooks']
 
     def on_start(self):
         logger.info('EventReporter started.')
 
-    def on_event(self, event, **kwargs):
-        send_webhook(self.config, {event: kwargs})
+    def playback_state_changed(self, old_state, new_state):
+        #send_webhook(self.config, new_state)
+        logger.info(new_state)
+        self.status_reporter.tell(new_state)

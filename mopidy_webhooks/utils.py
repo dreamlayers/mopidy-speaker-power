@@ -9,7 +9,6 @@ import logging
 import requests
 from mopidy.models import ModelJSONEncoder
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -21,7 +20,7 @@ def send_webhook(config, payload):
     try:
         response = requests.post(
             config['webhook_url'],
-            data=json.dumps(payload, cls=ModelJSONEncoder),
+            data=payload,
             headers={config['api_key_header_name']: config['api_key']},
         )
     except Exception as e:
@@ -30,7 +29,8 @@ def send_webhook(config, payload):
             e.message,
         ))
     else:
-        logger.debug('Webhook response: ({0}) {1}'.format(
-            response.status_code,
-            response.text,
-        ))
+        logger.debug('Webhook fail')
+        #logger.debug('Webhook response: ({0}) {1}'.format(
+        #    response.status_code,
+        #    response.text,
+        #))
