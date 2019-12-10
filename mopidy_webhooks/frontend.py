@@ -19,15 +19,14 @@ class WebhookFrontend(pykka.ThreadingActor):
 
     def __init__(self, config, core):
         super(WebhookFrontend, self).__init__()
-        self.config = config
+        self.config = config['webhooks']
         self.core = core
         self.event_reporter = None
         self.status_reporter = None
 
     def on_start(self):
-        self.status_reporter = status.StatusReporter.start(self.config,
-                                                           self.core)
-        self.event_reporter = events.EventReporter.start(self.config,                                                 self.status_reporter)
+        self.status_reporter = status.StatusReporter.start(self.config)
+        self.event_reporter = events.EventReporter.start(self.status_reporter)
 
     def _stop_children(self):
         self.event_reporter.stop()

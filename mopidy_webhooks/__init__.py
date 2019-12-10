@@ -23,9 +23,10 @@ class Extension(ext.Extension):
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
         schema['api_key'] = config.String()
-        schema['api_key_header_name'] = config.String()
-        schema['status_update_interval'] = config.Integer()
-        schema['webhook_url'] = config.String()
+        schema['hass_url'] = config.String()
+        schema['switch_name'] = config.String()
+        schema['pause_timeout'] = config.Integer()
+        schema['stop_timeout'] = config.Integer()
         return schema
 
     def setup(self, registry):
