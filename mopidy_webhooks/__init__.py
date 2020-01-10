@@ -22,7 +22,7 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        schema['api_key'] = config.String()
+        schema['api_key'] = config.Secret()
         schema['hass_url'] = config.String()
         schema['switch_name'] = config.String()
         schema['pause_timeout'] = config.Integer()
